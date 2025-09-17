@@ -42,7 +42,7 @@
         <!-- Cabeçalho -->
         <header class="text-center mb-8">
             <h1 class="text-3xl md:text-4xl font-bold text-slate-900">Carrinho de Compras Inteligente</h1>
-            <p class="text-slate-600 mt-2 max-w-2xl mx-auto">Arraste os itens da lista de necessidades para os carrinhos corretos (Custeio ou Capital) sem estourar os orçamentos.</p>
+            <p class="text-slate-600 mt-2 max-w-2xl mx-auto">Arraste os itens da lista de necessidades para os carrinhos corretos (Custeio ou Capital) sem estourar os orçamentos, com base nas regras do PDDE.</p>
         </header>
 
         <!-- Painel de Orçamentos -->
@@ -50,12 +50,12 @@
             <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 text-center">
                 <h2 class="text-lg font-bold text-blue-600">ORÇAMENTO DE CUSTEIO</h2>
                 <p class="text-3xl font-bold text-slate-800 mt-2" id="orcamento-custeio">R$ 2.000,00</p>
-                <p class="text-sm text-slate-500">Para despesas operacionais e de consumo.</p>
+                <p class="text-sm text-slate-500">Para material de consumo e serviços.</p>
             </div>
             <div class="bg-white p-6 rounded-xl shadow-md border border-slate-200 text-center">
                 <h2 class="text-lg font-bold text-green-600">ORÇAMENTO DE CAPITAL</h2>
                 <p class="text-3xl font-bold text-slate-800 mt-2" id="orcamento-capital">R$ 3.000,00</p>
-                <p class="text-sm text-slate-500">Para bens duráveis e investimentos.</p>
+                <p class="text-sm text-slate-500">Para equipamentos e material permanente.</p>
             </div>
         </div>
 
@@ -118,17 +118,31 @@
 
             let orcamentosAtuais = { ...orcamentoInicial };
 
+            // Lista de itens atualizada com base nas diretrizes do PDDE
             const itens = [
-                { id: 'item-1', nome: 'Resmas de Papel A4', preco: 25.00, tipo: 'custeio', img: 'https://placehold.co/80x80/e2e8f0/475569?text=Papel+A4' },
-                { id: 'item-2', nome: 'Caixa de Canetas', preco: 40.00, tipo: 'custeio', img: 'https://placehold.co/80x80/e2e8f0/475569?text=Canetas' },
-                { id: 'item-3', nome: 'Kit de Limpeza', preco: 150.00, tipo: 'custeio', img: 'https://placehold.co/80x80/e2e8f0/475569?text=Limpeza' },
-                { id: 'item-4', nome: 'Cartuchos de Tinta', preco: 200.00, tipo: 'custeio', img: 'https://placehold.co/80x80/e2e8f0/475569?text=Tinta' },
-                { id: 'item-5', nome: 'Projetor Multimídia', preco: 1800.00, tipo: 'capital', img: 'https://placehold.co/80x80/e2e8f0/475569?text=Projetor' },
-                { id: 'item-6', nome: 'Computador', preco: 2500.00, tipo: 'capital', img: 'https://placehold.co/80x80/e2e8f0/475569?text=PC' },
-                { id: 'item-7', nome: 'Impressora', preco: 900.00, tipo: 'capital', img: 'https://placehold.co/80x80/e2e8f0/475569?text=Impressora' },
-                { id: 'item-8', nome: 'Cadeira de Escritório', preco: 450.00, tipo: 'capital', img: 'https://placehold.co/80x80/e2e8f0/475569?text=Cadeira' },
-                { id: 'item-9', nome: 'Lâmpadas LED (Pacote)', preco: 80.00, tipo: 'custeio', img: 'https://placehold.co/80x80/e2e8f0/475569?text=Lâmpadas' },
-                { id: 'item-10', nome: 'Armário de Aço', preco: 600.00, tipo: 'capital', img: 'https://placehold.co/80x80/e2e8f0/475569?text=Armário' },
+                // --- CUSTEIO (Material de Consumo e Serviços) ---
+                { id: 'item-c1', nome: 'Formação de Professores (Workshop)', preco: 600.00, tipo: 'custeio', img: 'https://placehold.co/80x80/E0E0E0/333333?text=Curso' },
+                { id: 'item-c2', nome: 'Assinatura Plataforma Digital Educativa', preco: 500.00, tipo: 'custeio', img: 'https://placehold.co/80x80/E0E0E0/333333?text=Digital' },
+                { id: 'item-c3', nome: 'Serviços Gráficos (Impressão de Apostilas)', preco: 350.00, tipo: 'custeio', img: 'https://placehold.co/80x80/E0E0E0/333333?text=Gráfica' },
+                { id: 'item-c4', nome: 'Pequeno Reparo Elétrico', preco: 300.00, tipo: 'custeio', img: 'https://placehold.co/80x80/E0E0E0/333333?text=Reparo' },
+                { id: 'item-c5', nome: 'Kit para Projeto de Ciências (Consumíveis)', preco: 250.00, tipo: 'custeio', img: 'https://placehold.co/80x80/E0E0E0/333333?text=Ciência' },
+                { id: 'item-c6', nome: 'Tintas para Pintura de Sala de Aula', preco: 400.00, tipo: 'custeio', img: 'https://placehold.co/80x80/E0E0E0/333333?text=Pintura' },
+                { id: 'item-c7', nome: 'Material de Expediente Completo', preco: 200.00, tipo: 'custeio', img: 'https://placehold.co/80x80/E0E0E0/333333?text=Papelaria' },
+                { id: 'item-c8', nome: 'Recarga de Extintores de Incêndio', preco: 150.00, tipo: 'custeio', img: 'https://placehold.co/80x80/E0E0E0/333333?text=Segurança' },
+                { id: 'item-c9', nome: 'Material de Limpeza e Higiene', preco: 300.00, tipo: 'custeio', img: 'https://placehold.co/80x80/E0E0E0/333333?text=Limpeza' },
+                { id: 'item-c10', nome: 'Insumos para Cozinha (Gás, etc)', preco: 250.00, tipo: 'custeio', img: 'https://placehold.co/80x80/E0E0E0/333333?text=Cozinha' },
+
+                // --- CAPITAL (Material Permanente, Equipamentos e Mobiliário) ---
+                { id: 'item-k1', nome: 'Computador para Secretaria', preco: 2200.00, tipo: 'capital', img: 'https://placehold.co/80x80/BDBDBD/333333?text=PC' },
+                { id: 'item-k2', nome: 'Estante de Aço para Biblioteca', preco: 800.00, tipo: 'capital', img: 'https://placehold.co/80x80/BDBDBD/333333?text=Estante' },
+                { id: 'item-k3', nome: 'Kit Multimídia (Projetor + Tela)', preco: 1800.00, tipo: 'capital', img: 'https://placehold.co/80x80/BDBDBD/333333?text=Projetor' },
+                { id: 'item-k4', nome: 'Bebedouro Industrial', preco: 1200.00, tipo: 'capital', img: 'https://placehold.co/80x80/BDBDBD/333333?text=Água' },
+                { id: 'item-k5', nome: 'Kit de Robótica Educacional (Base)', preco: 1500.00, tipo: 'capital', img: 'https://placehold.co/80x80/BDBDBD/333333?text=Robô' },
+                { id: 'item-k6', nome: 'Microscópio para Laboratório', preco: 700.00, tipo: 'capital', img: 'https://placehold.co/80x80/BDBDBD/333333?text=Microscópio' },
+                { id: 'item-k7', nome: 'Instrumentos Musicais (Kit Percussão)', preco: 900.00, tipo: 'capital', img: 'https://placehold.co/80x80/BDBDBD/333333?text=Música' },
+                { id: 'item-k8', nome: 'Caixa de Som Amplificada', preco: 600.00, tipo: 'capital', img: 'https://placehold.co/80x80/BDBDBD/333333?text=Som' },
+                { id: 'item-k9', nome: 'Mobiliário Infantil (5 conjuntos)', preco: 1500.00, tipo: 'capital', img: 'https://placehold.co/80x80/BDBDBD/333333?text=Mesas' },
+                { id: 'item-k10', nome: 'Abacos e Material Dourado (conjunto)', preco: 400.00, tipo: 'capital', img: 'https://placehold.co/80x80/BDBDBD/333333?text=Pedagógico' }
             ];
 
             // --- ELEMENTOS DO DOM ---
@@ -144,22 +158,18 @@
 
             // --- FUNÇÕES ---
             
-            // Formata um número para o padrão de moeda brasileiro
             const formatarMoeda = (valor) => {
                 return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
             };
 
-            // Atualiza os valores de orçamento na tela
             const atualizarDisplayOrcamento = () => {
                 orcamentoCusteioEl.textContent = formatarMoeda(orcamentosAtuais.custeio);
                 orcamentoCapitalEl.textContent = formatarMoeda(orcamentosAtuais.capital);
                 
-                // Adiciona cor vermelha se o orçamento estiver negativo
                 orcamentoCusteioEl.classList.toggle('text-red-500', orcamentosAtuais.custeio < 0);
                 orcamentoCapitalEl.classList.toggle('text-red-500', orcamentosAtuais.capital < 0);
             };
             
-            // Exibe o modal de feedback
             const mostrarModal = (titulo, mensagem, tipo = 'erro') => {
                 modalTitle.textContent = titulo;
                 modalMessage.textContent = mensagem;
@@ -174,10 +184,11 @@
                 modal.classList.remove('hidden');
             };
 
-            // Cria e insere os cards de itens na lista de disponíveis
             const carregarItens = () => {
-                itensDisponiveisContainer.innerHTML = ''; // Limpa a lista
-                itens.forEach(item => {
+                itensDisponiveisContainer.innerHTML = '';
+                const itensEmbaralhados = [...itens].sort(() => Math.random() - 0.5);
+
+                itensEmbaralhados.forEach(item => {
                     const itemEl = document.createElement('div');
                     itemEl.id = item.id;
                     itemEl.className = 'item-card flex items-center p-3 bg-white rounded-lg shadow-sm border border-slate-200 cursor-grab';
@@ -194,18 +205,28 @@
                 adicionarEventListenersItens();
             };
             
-            // Verifica se o jogo terminou
             const verificarFimDeJogo = () => {
-                if (itensDisponiveisContainer.children.length === 0) {
-                    let mensagemFinal = 'Todos os itens foram alocados!';
-                    if (orcamentosAtuais.custeio < 0 || orcamentosAtuais.capital < 0) {
-                        mensagemFinal += ' No entanto, um ou mais orçamentos foram estourados. Tente novamente para um resultado perfeito!';
-                        mostrarModal('Quase lá! 😬', mensagemFinal, 'erro');
-                    } else {
-                        mensagemFinal += ' E você conseguiu ficar dentro de todos os orçamentos. Excelente gestão!';
-                        mostrarModal('Parabéns! 🎉', mensagemFinal, 'sucesso');
+                const itensRestantes = itensDisponiveisContainer.children.length;
+                if (itensRestantes > 0) return;
+
+                let mensagemFinal;
+                let tituloFinal;
+                let tipoModal;
+
+                if (orcamentosAtuais.custeio >= 0 && orcamentosAtuais.capital >= 0) {
+                    tituloFinal = 'Parabéns! 🎉';
+                    mensagemFinal = 'Você alocou todos os itens corretamente e ficou dentro dos dois orçamentos. Excelente gestão financeira!';
+                    tipoModal = 'sucesso';
+                     if(orcamentosAtuais.custeio === 0 && orcamentosAtuais.capital === 0){
+                        mensagemFinal += ' E ainda conseguiu zerar os orçamentos, resultado perfeito!'
                     }
+                } else {
+                     // Esta condição não deve ser alcançada por causa da validação no drop, mas fica como segurança.
+                    tituloFinal = 'Quase lá! 😬';
+                    mensagemFinal = 'Você alocou todos os itens, mas pelo menos um dos orçamentos foi estourado. Tente novamente para um resultado perfeito!';
+                    tipoModal = 'erro';
                 }
+                mostrarModal(tituloFinal, mensagemFinal, tipoModal);
             };
 
             // --- LÓGICA DE DRAG AND DROP ---
@@ -220,7 +241,7 @@
             }
 
             function handleDragOver(e) {
-                e.preventDefault(); // Necessário para permitir o drop
+                e.preventDefault();
                 this.classList.add('drag-over');
             }
 
@@ -235,47 +256,41 @@
                 const idItemArrastado = e.dataTransfer.getData('text/plain');
                 const itemArrastadoEl = document.getElementById(idItemArrastado);
                 
-                // Previne erro se o elemento não for encontrado
-                if (!itemArrastadoEl) return;
-                
-                // Previne que um item já no carrinho seja movido
-                if (itemArrastadoEl.parentElement !== itensDisponiveisContainer) return;
+                if (!itemArrastadoEl || itemArrastadoEl.parentElement !== itensDisponiveisContainer) return;
 
                 const itemData = itens.find(i => i.id === idItemArrastado);
                 const tipoCarrinho = this.dataset.tipo;
 
-                // 1. Validação: O item pertence a este carrinho?
                 if (itemData.tipo !== tipoCarrinho) {
                     mostrarModal('Carrinho Errado!', `O item "${itemData.nome}" é uma despesa de ${itemData.tipo}, não de ${tipoCarrinho}.`, 'erro');
                     return;
                 }
-
-                // 2. Validação: O orçamento permite esta compra?
+                
+                // Validação para não permitir orçamento negativo
                 if (itemData.preco > orcamentosAtuais[tipoCarrinho]) {
-                    mostrarModal('Orçamento Insuficiente!', `Você não tem saldo de ${tipoCarrinho} para comprar "${itemData.nome}". Falta ${formatarMoeda(itemData.preco - orcamentosAtuais[tipoCarrinho])}.`, 'erro');
+                    mostrarModal('Orçamento Insuficiente!', `Adicionar "${itemData.nome}" deixaria o saldo de ${tipoCarrinho} negativo. Operação cancelada.`, 'erro');
                     return;
                 }
 
-                // --- SUCESSO ---
-                // Deduz o valor do orçamento
                 orcamentosAtuais[tipoCarrinho] -= itemData.preco;
                 atualizarDisplayOrcamento();
 
-                // Move o item para o carrinho
                 const containerDestino = document.getElementById(`${tipoCarrinho}-items`);
                 const placeholder = containerDestino.querySelector('p');
-                if (placeholder) placeholder.remove(); // Remove a mensagem "Arraste para cá"
+                if (placeholder) placeholder.remove();
                 
                 containerDestino.appendChild(itemArrastadoEl);
                 itemArrastadoEl.draggable = false;
-                itemArrastadoEl.className = 'item-card flex items-center p-3 bg-white rounded-lg shadow-sm border border-slate-200 item-in-cart'; // Remove cursor-grab e adiciona classe de bloqueio
+                itemArrastadoEl.className = 'item-card flex items-center p-3 bg-white rounded-lg shadow-sm border border-slate-200 item-in-cart';
 
-                verificarFimDeJogo();
+                // Verifica se o jogo terminou apenas depois que todos os itens foram alocados
+                if(itensDisponiveisContainer.children.length === 0){
+                    verificarFimDeJogo();
+                }
             }
             
             // --- INICIALIZAÇÃO E EVENT LISTENERS ---
 
-            // Adiciona listeners aos itens
             const adicionarEventListenersItens = () => {
                 const itensDraggable = document.querySelectorAll('#itens-disponiveis .item-card');
                 itensDraggable.forEach(item => {
@@ -284,35 +299,29 @@
                 });
             };
             
-            // Adiciona listeners às zonas de drop (carrinhos)
             dropZones.forEach(zone => {
                 zone.addEventListener('dragover', handleDragOver);
                 zone.addEventListener('dragleave', handleDragLeave);
                 zone.addEventListener('drop', handleDrop);
             });
 
-            // Listener para o botão de fechar do modal
             modalClose.addEventListener('click', () => modal.classList.add('hidden'));
 
-            // Função para reiniciar a atividade
             const reiniciarAtividade = () => {
-                // Reseta os orçamentos
                 orcamentosAtuais = { ...orcamentoInicial };
                 atualizarDisplayOrcamento();
 
-                // Limpa os carrinhos e restaura as mensagens placeholder
                 document.getElementById('custeio-items').innerHTML = '<p class="text-center text-slate-400">Arraste os itens de custeio para cá.</p>';
                 document.getElementById('capital-items').innerHTML = '<p class="text-center text-slate-400">Arraste os itens de capital para cá.</p>';
 
-                // Recarrega os itens na lista de disponíveis
                 carregarItens();
             };
             
             resetButton.addEventListener('click', reiniciarAtividade);
 
-            // Inicia a aplicação
             reiniciarAtividade();
         });
     </script>
 </body>
 </html>
+
